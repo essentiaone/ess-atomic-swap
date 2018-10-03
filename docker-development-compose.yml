@@ -1,0 +1,11 @@
+version: '3'
+services:
+  ess-atomic-swap:
+    container_name: ess-atomic-swap
+    environment:
+     - ESS_ATOMIC_SWAP_PORT=${ESS_ATOMIC_SWAP_PORT}
+    build:
+      context: .
+      dockerfile: Dockerfile-development
+    ports:
+      - '${ESS_ATOMIC_SWAP_PORT}:${ESS_ATOMIC_SWAP_PORT}'
