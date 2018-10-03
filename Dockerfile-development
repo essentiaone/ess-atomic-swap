@@ -1,3 +1,5 @@
-FROM golang:1.10
-WORKDIR /ess-atomic-swap
-COPY . /ess-atomic-swap
+FROM golang:1.10.3
+RUN mkdir -p /go/src/ess-atomic-swap
+WORKDIR /go/src/ess-atomic-swap
+COPY . /go/src/ess-atomic-swap
+ENTRYPOINT make
