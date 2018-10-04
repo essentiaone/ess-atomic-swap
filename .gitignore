@@ -15,6 +15,7 @@
 
 # Build
 ess-atomic-swap
+gin-bin
 
 # config
 config.json

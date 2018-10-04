@@ -1,12 +1,23 @@
-
 GOCMD=go
 GOBUILD=$(GOCMD) build
+GORUN=$(GOCMD) run
+GOGET=$(GOCMD) get
 BINARY_NAME=ess-atomic-swap
 
-run:	build start
+## Develop
+run_development: build_development start_development
 
-build:
+build_development:
+	$(GOGET) github.com/codegangsta/gin
+
+start_development:
+	gin --appPort=${ESS_ATOMIC_SWAP_APP_PORT} --port=${ESS_ATOMIC_SWAP_DEV_PORT} run main.go
+
+## Production
+run_production:	build_production start_production
+
+build_production:
 	$(GOBUILD) .
 
-start:
+start_production:
 	./$(BINARY_NAME)

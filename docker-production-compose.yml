@@ -5,11 +5,11 @@ services:
     environment:
       - ESS_ATOMIC_SWAP_APP_PORT=${ESS_ATOMIC_SWAP_APP_PORT}
       - ESS_ATOMIC_SWAP_DEV_PORT=${ESS_ATOMIC_SWAP_DEV_PORT}
-      - ESS_ATOMIC_SWAP_DEVELOPMENT=true
+      - ESS_ATOMIC_SWAP_DEVELOPMENT=false
     build:
       context: .
-      dockerfile: Dockerfile-development
+      dockerfile: Dockerfile-production
     volumes:
       - .:/go/src/ess-atomic-swap
     ports:
-      - '${ESS_ATOMIC_SWAP_APP_PORT}:${ESS_ATOMIC_SWAP_DEV_PORT}'
+      - '${ESS_ATOMIC_SWAP_APP_PORT}:${ESS_ATOMIC_SWAP_APP_PORT}'
