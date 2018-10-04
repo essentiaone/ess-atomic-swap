@@ -2,4 +2,4 @@ FROM golang:1.10.3
 RUN mkdir -p /go/src/ess-atomic-swap
 WORKDIR /go/src/ess-atomic-swap
 COPY . /go/src/ess-atomic-swap
-ENTRYPOINT make
+ENTRYPOINT make run_development
