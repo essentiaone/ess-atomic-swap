@@ -10,6 +10,6 @@ services:
       context: .
       dockerfile: Dockerfile-production
     volumes:
-      - .:/go/src/ess-atomic-swap
+      - .:/go/src/github.com/essentiaone/ess-atomic-swap
     ports:
       - '${ESS_ATOMIC_SWAP_APP_PORT}:${ESS_ATOMIC_SWAP_APP_PORT}'
