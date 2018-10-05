@@ -10,5 +10,5 @@ before_install:
   ## Wait start daemon
   - sleep 10
 script:
-  - docker exec -it ess-atomic-swap bash -c "golint ./..."
-  - docker exec -it ess-atomic-swap bash -c "go test ./..."
+  - docker exec -it ess-atomic-swap bash -c "make run_golangci_lint"
+  - docker exec -it ess-atomic-swap bash -c "make run_unit_tests"

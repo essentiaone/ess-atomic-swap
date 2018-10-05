@@ -17,6 +17,7 @@ func main() {
 	if port == "" {
 		log.Fatal("ESS_ATOMIC_SWAP_APP_PORT environment variable was not set")
 	}
+
 	err := http.ListenAndServe(":"+port, nil)
 	if err != nil {
 		log.Fatal("Could not listen: ", err)
