@@ -2,16 +2,16 @@
 
 
 [[projects]]
-  digest = "1:ccfa094742ce1c97fd3f6481e1bf98f3d9862510eee2bc0eb56e2745396bd330"
-  name = "github.com/julienschmidt/httprouter"
+  digest = "1:88f504c9e9517cd6ec7bd103c3331fa245307ccaeb92f900cfb0c727b6e872d4"
+  name = "github.com/caarlos0/env"
   packages = ["."]
   pruneopts = "UT"
-  revision = "8c199fb6259ffc1af525cc3ad52ee60ba8359669"
-  version = "v1.1"
+  revision = "7f73d6597823c7a0c39edd46e1998f90692b2add"
+  version = "v3.4.0"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  input-imports = ["github.com/julienschmidt/httprouter"]
+  input-imports = ["github.com/caarlos0/env"]
   solver-name = "gps-cdcl"
   solver-version = 1
