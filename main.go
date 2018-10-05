@@ -3,8 +3,9 @@ package main
 import (
 	"log"
 	"net/http"
-	"os"
-	// "github.com/essentiaone/ess-atomic-swap/config"
+
+	"github.com/essentiaone/ess-atomic-swap/config"
+	"github.com/essentiaone/ess-atomic-swap/server"
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
@@ -13,14 +14,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 func main() {
 
-	http.HandleFunc("/", handler)
-
-	port := os.Getenv("ESS_ATOMIC_SWAP_APP_PORT")
-	if port == "" {
-		log.Fatal("ESS_ATOMIC_SWAP_APP_PORT environment variable was not set")
-	}
-	err := http.ListenAndServe(":"+port, nil)
-	if err != nil {
-		log.Fatal("Could not listen: ", err)
-	}
+	settings, _ := config.Init()
+	server.Init(settings.Server)
+	log.Fatal(http.ListenAndServe(":"+settings.Server.Port, nil))
 }
