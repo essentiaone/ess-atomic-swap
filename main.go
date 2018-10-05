@@ -10,7 +10,7 @@ import (
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	log.Println("Received Request: ", r.URL.Path)
-	w.Write([]byte("Hello, world!"))
+	w.Write([]byte("Hello, worrrrld!"))
 }
 func main() {
 	settings, _ := config.Init()
