@@ -8,7 +8,7 @@ before_install:
   - docker-compose -f docker-development-compose.yml build
   - docker-compose -f docker-development-compose.yml up -d
   ## Wait start daemon
-  - sleep 10
+  - sleep 30
 script:
   - docker exec -it ess-atomic-swap bash -c "make run_golangci_lint"
   - docker exec -it ess-atomic-swap bash -c "make run_unit_tests"

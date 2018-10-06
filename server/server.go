@@ -10,8 +10,17 @@ type Settings struct {
 	Port string `env:"ESS_ATOMIC_SWAP_APP_PORT"`
 }
 
+func initRouting() {
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		if _, err := w.Write([]byte("Hello, world")); err != nil {
+			panic(err)
+		}
+	})
+}
+
 //Init is a func for initiate a Settings struct
-func Init(settings Settings) {
+func Init(settings Settings) error {
 	addr := ":" + settings.Port
-	http.ListenAndServe(addr, nil)
+	initRouting()
+	return http.ListenAndServe(addr, nil)
 }
