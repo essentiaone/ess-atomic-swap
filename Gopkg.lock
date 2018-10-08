@@ -2,16 +2,16 @@
 
 
 [[projects]]
-  digest = "1:88f504c9e9517cd6ec7bd103c3331fa245307ccaeb92f900cfb0c727b6e872d4"
-  name = "github.com/caarlos0/env"
+  branch = "master"
+  digest = "1:bd1b5ce5a04000dbe5d1c22812699509c17a8572c6385a43023c7e08ea4e7623"
+  name = "github.com/joeshaw/envdecode"
   packages = ["."]
   pruneopts = "UT"
-  revision = "7f73d6597823c7a0c39edd46e1998f90692b2add"
-  version = "v3.4.0"
+  revision = "c9e0158544672841c3ebf49308f536d918f2e525"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  input-imports = ["github.com/caarlos0/env"]
+  input-imports = ["github.com/joeshaw/envdecode"]
   solver-name = "gps-cdcl"
   solver-version = 1
