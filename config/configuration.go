@@ -13,6 +13,8 @@ type Configuration struct {
 //Init - func that read env va-les
 func Init() (Configuration, error) {
 	conf := Configuration{}
-	env.Parse(&conf)
+	if err := env.Parse(&conf); err != nil {
+		panic(err)
+	}
 	return conf, nil
 }
