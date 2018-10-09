@@ -4,6 +4,14 @@ sudo:
 services:
   - docker
 
+deploy:
+  provider: heroku
+  api_key:
+    secure: "fa12497b-a48c-4e94-b055-7b7a4546efd6"
+  app: ess-atomic-swap
+  on:
+    all_branches: true
+
 before_install:
   - docker-compose -f docker-development-compose.yml build
   - docker-compose -f docker-development-compose.yml up -d
