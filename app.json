@@ -1,0 +1,21 @@
+{
+  "name": "ess-atomic-swap",
+  "description": "Service to cross-chain transactions between two or more people",
+  "scripts": {
+  },
+  "env": {
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/go"
+    }
+  ]
+}
