@@ -7,12 +7,12 @@ import (
 //Settings struct is a simple settings for the server
 type Settings struct {
 	SSL  bool
-	Port string `env:"ESS_ATOMIC_SWAP_APP_PORT"`
+	Port string `env:"PORT"`
 }
 
 func initRouting() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		if _, err := w.Write([]byte("Hello, world")); err != nil {
+		if _, err := w.Write([]byte("Hello, world!")); err != nil {
 			panic(err)
 		}
 	})

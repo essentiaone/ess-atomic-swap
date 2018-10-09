@@ -3,13 +3,13 @@ services:
   ess-atomic-swap:
     container_name: ess-atomic-swap
     environment:
-      - ESS_ATOMIC_SWAP_APP_PORT=${ESS_ATOMIC_SWAP_APP_PORT}
-      - ESS_ATOMIC_SWAP_DEV_PORT=${ESS_ATOMIC_SWAP_DEV_PORT}
-      - ESS_ATOMIC_SWAP_DEVELOPMENT=false
+      - PORT=${PORT}
+      - DEV_PORT=${DEV_PORT}
+      - DEVELOPMENT=false
     build:
       context: .
       dockerfile: Dockerfile-production
     volumes:
       - .:/go/src/github.com/essentiaone/ess-atomic-swap
     ports:
-      - '${ESS_ATOMIC_SWAP_APP_PORT}:${ESS_ATOMIC_SWAP_APP_PORT}'
+      - '${PORT}:${PORT}'

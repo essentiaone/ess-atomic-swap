@@ -13,7 +13,7 @@ build_development:
 	$(GOGET) -u github.com/golangci/golangci-lint/cmd/golangci-lint
 
 start_development:
-	gin --appPort=${ESS_ATOMIC_SWAP_APP_PORT} --port=${ESS_ATOMIC_SWAP_DEV_PORT} run main.go
+	gin --appPort=${PORT} --port=${DEV_PORT} run main.go
 
 ## Production
 run_production:	build_production start_production

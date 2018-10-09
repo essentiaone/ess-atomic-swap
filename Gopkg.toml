@@ -44,3 +44,8 @@
 [[constraint]]
   branch = "master"
   name = "github.com/joeshaw/envdecode"
+
+[metadata.heroku]
+  root-package = "github.com/essentiaone/ess-atomic-swap"
+  go-version = "1.10.3"
+  install = [ "." ]
