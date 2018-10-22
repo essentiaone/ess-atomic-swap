@@ -4,6 +4,7 @@ import (
 	"github.com/essentiaone/ess-atomic-swap/models"
 )
 
-type BTCUseCase interface {
-	checkStatus(models.BTCTransaction)
+// BitcoinUseCase is an interface for using BR of BTC atomic swap
+type BitcoinUseCase interface {
+	checkStatus(models.BitcoinTransaction)
 }
