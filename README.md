@@ -5,8 +5,8 @@ Service to cross-chain transactions between two or more people
 
 1. Set `ENV` variables from `.env` file"
 	```
-	$ export export ESS_ATOMIC_SWAP_APP_PORT=1604
-	$ export export ESS_ATOMIC_SWAP_DEV_PORT=1605
+	$ export PORT=1604
+	$ export DEV_PORT=1605
 	...
 	```
 

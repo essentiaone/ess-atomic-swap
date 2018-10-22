@@ -4,7 +4,8 @@ import (
 	"github.com/essentiaone/ess-atomic-swap/models"
 )
 
-type BTCRepository interface {
-	saveBTCTx(btcTx models.BTCTransaction)
-	getBTCTx() models.BTCTransaction
+// BitcoinRepository is an interface for storing info
+type BitcoinRepository interface {
+	saveBTCTx(btcTx models.BitcoinTransaction)
+	getBTCTx() models.BitcoinTransaction
 }

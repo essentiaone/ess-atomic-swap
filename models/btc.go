@@ -1,7 +1,7 @@
 package models
 
-//BTCTransaction is a struct for a regular tx
-type BTCTransaction struct {
+// BitcoinTransaction is a struct for a regular tx
+type BitcoinTransaction struct {
 	Amount        uint32
 	Confirmations uint32
 	TxID          uint32
