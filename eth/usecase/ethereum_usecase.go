@@ -9,7 +9,8 @@ import (
 )
 
 const (
-	txSuccess = "0x1"
+	getTxReceiptMethodName = "eth_getTransactionReceipt"
+	txSuccess              = "0x1"
 )
 
 // EthereumUseCase consist all dependency for business logic
@@ -19,7 +20,7 @@ type EthereumUseCase struct {
 }
 
 // New create EthereumUseCase
-func New(ethRep eth.EthereumRepository, nodeAddress string) eth.EthrerumUseCase {
+func New(ethRep eth.EthereumRepository, nodeAddress string) eth.EthereumUseCase {
 	return &EthereumUseCase{
 		EthereumRepository: ethRep,
 		NodeAddress:        nodeAddress,
@@ -51,7 +52,7 @@ func getTransactionInfo(address, tx string) (*common.ResponseEthereumNode, error
 		Params:  []string{tx},
 		Address: address,
 		JSONRPC: "2.0",
-		Method:  "eth_getTransactionReceipt",
+		Method:  getTxReceiptMethodName,
 		ID:      1,
 	}
 

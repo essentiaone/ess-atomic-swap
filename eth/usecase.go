@@ -1,6 +1,6 @@
 package eth
 
-// EthrerumUseCase is an interface for using BR of ETH atomic swap
-type EthrerumUseCase interface {
+// EthereumUseCase is an interface for using BR of ETH atomic swap
+type EthereumUseCase interface {
 	CheckTxStatus(string) bool
 }
