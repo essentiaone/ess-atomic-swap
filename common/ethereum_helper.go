@@ -7,7 +7,7 @@ import (
 )
 
 // RequestEthereumBody structure for body request to node
-// TODO: можно пременить фаст json
+// TODO: use easyjson
 type RequestEthereumBody struct {
 	Params  interface{} `json:"params"`
 	Address string      `json:"-"`
@@ -23,7 +23,6 @@ type ResponseEthereumNode struct {
 }
 
 // GenerateRequest generate request to node
-// Теститься очень изи
 func (r *RequestEthereumBody) GenerateRequest() (*http.Request, error) {
 	rawData := []byte{}
 	buf := bytes.NewBuffer(rawData)

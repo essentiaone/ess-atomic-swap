@@ -1,6 +1,7 @@
 package common
 
 import (
+	"errors"
 	"io"
 	"net/http"
 )
@@ -11,9 +12,12 @@ type RequestGenerator interface {
 }
 
 // HTTPRequestToNode implement http request to node
-// Теститься тоже изи
 func HTTPRequestToNode(r RequestGenerator) (io.ReadCloser, error) {
 	request, err := r.GenerateRequest()
+	if err != nil {
+		return nil, err
+	}
+
 	request.Header.Add("Content-Type", "application/json")
 
 	client := http.Client{}
@@ -21,9 +25,8 @@ func HTTPRequestToNode(r RequestGenerator) (io.ReadCloser, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	if response.StatusCode >= http.StatusBadRequest {
-		return nil, err // TODO add wrapper for error
+		return nil, errors.New("error status code")
 	}
 	return response.Body, nil
 }

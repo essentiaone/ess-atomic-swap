@@ -11,7 +11,7 @@ import (
 func main() {
 	settings, _ := config.Init()
 
-	test := usecase.New(nil)
+	test := usecase.New(nil, "https://mainnet.infura.io/Q6negVFqtmL30lFN6rK5")
 	result := test.CheckTxStatus("0xa2ec48862367f5a641b6d565bf6a4fbee067c9cc4647d9293eb15c4f4e47d2d5")
 	fmt.Println(result)
 

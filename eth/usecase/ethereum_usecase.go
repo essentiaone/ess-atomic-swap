@@ -3,33 +3,37 @@ package usecase
 import (
 	"encoding/json"
 
-	"github.com/essentiaone/ess-atomic-swap/models"
-
 	"github.com/essentiaone/ess-atomic-swap/common"
 	"github.com/essentiaone/ess-atomic-swap/eth"
+	"github.com/essentiaone/ess-atomic-swap/models"
 )
 
 const (
-	address   = "https://mainnet.infura.io/Q6negVFqtmL30lFN6rK5 "
 	txSuccess = "0x1"
-	txFailed  = "0x0"
 )
 
 // EthereumUseCase consist all dependency for business logic
 type EthereumUseCase struct {
+	NodeAddress        string
 	EthereumRepository eth.EthereumRepository
 }
 
 // New create EthereumUseCase
-func New(ethRep eth.EthereumRepository) eth.EthrerumUseCase {
+func New(ethRep eth.EthereumRepository, nodeAddress string) eth.EthrerumUseCase {
 	return &EthereumUseCase{
 		EthereumRepository: ethRep,
+		NodeAddress:        nodeAddress,
 	}
 }
 
 // CheckTxStatus check success status for ethereum transaction
+// TODO implement sturct for response with status error and description
 func (eth *EthereumUseCase) CheckTxStatus(tx string) bool {
-	response, _ := eth.getTransactionInfo(address, tx)
+	response, err := getTransactionInfo(eth.NodeAddress, tx)
+	if err != nil {
+		return false
+	}
+
 	transactionInfo, ok := response.Result.(*models.EthereumTransaction)
 	if !ok {
 		return false
@@ -42,7 +46,7 @@ func (eth *EthereumUseCase) CheckTxStatus(tx string) bool {
 	return false
 }
 
-func (eth *EthereumUseCase) getTransactionInfo(address, tx string) (*common.ResponseEthereumNode, error) {
+func getTransactionInfo(address, tx string) (*common.ResponseEthereumNode, error) {
 	dataRequest := &common.RequestEthereumBody{
 		Params:  []string{tx},
 		Address: address,
@@ -52,10 +56,15 @@ func (eth *EthereumUseCase) getTransactionInfo(address, tx string) (*common.Resp
 	}
 
 	responseBody, err := common.HTTPRequestToNode(dataRequest)
+	defer func() {
+		if responseBody != nil {
+			responseBody.Close()
+		}
+	}()
+
 	if err != nil {
 		return nil, err
 	}
-	defer responseBody.Close()
 
 	ethResponse := &common.ResponseEthereumNode{
 		Result: &models.EthereumTransaction{},
