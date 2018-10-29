@@ -6,6 +6,6 @@ import (
 
 // BitcoinRepository is an interface for storing info
 type BitcoinRepository interface {
-	saveBTCTx(btcTx models.BitcoinTransaction)
-	getBTCTx() models.BitcoinTransaction
+	SaveBitcoinTx(btcTx models.BitcoinTransaction)
+	GetBitcoinTx() models.BitcoinTransaction
 }

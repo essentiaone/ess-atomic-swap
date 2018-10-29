@@ -7,10 +7,10 @@ type BitcoinTransaction struct {
 	TxID          uint32
 	Time          uint32
 	Details       struct {
-		account  string
-		address  string
-		category string
-		amount   uint32
-		fee      uint32
+		Account  string
+		Address  string
+		Category string
+		Amount   uint32
+		Fee      uint32
 	}
 }
