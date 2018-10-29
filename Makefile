@@ -30,4 +30,4 @@ run_golangci_lint:
 
 ## Tests
 run_unit_tests:
-	go test $(PROJECT_FILES)
+	go test ./...
