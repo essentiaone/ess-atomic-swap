@@ -6,9 +6,8 @@ import (
 	"net/http"
 )
 
-// RequestEthereumBody structure for body request to node
-// TODO: use easyjson in future
-type RequestEthereumBody struct {
+// RequestBitcoinBody structure for body request to node
+type RequestBitcoinBody struct {
 	Params  interface{} `json:"params"`
 	Address string      `json:"-"`
 	JSONRPC string      `json:"jsonrpc"`
@@ -16,14 +15,14 @@ type RequestEthereumBody struct {
 	ID      uint8       `json:"id"`
 }
 
-// ResponseEthereumNode strcut for response ethereum node
-type ResponseEthereumNode struct {
+// ResponseBitcoinNode strcut for response Bitcoin node
+type ResponseBitcoinNode struct {
 	Result interface{} `json:"result,omitempty"`
 	Error  interface{} `json:"error,omitempty"`
 }
 
 // GenerateRequest generate request to node
-func (r *RequestEthereumBody) GenerateRequest() (*http.Request, error) {
+func (r *RequestBitcoinBody) GenerateRequest() (*http.Request, error) {
 	rawData := []byte{}
 	buf := bytes.NewBuffer(rawData)
 	err := json.NewEncoder(buf).Encode(r)
@@ -31,5 +30,5 @@ func (r *RequestEthereumBody) GenerateRequest() (*http.Request, error) {
 		return nil, err
 	}
 
-	return http.NewRequest("POST", r.Address, buf)
+	return http.NewRequest("POST", r.Address, bytes.NewBuffer(buf.Bytes()))
 }
