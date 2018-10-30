@@ -7,7 +7,7 @@ import (
 )
 
 // RequestEthereumBody structure for body request to node
-// TODO: use easyjson
+// TODO: use easyjson in future
 type RequestEthereumBody struct {
 	Params  interface{} `json:"params"`
 	Address string      `json:"-"`
@@ -31,5 +31,5 @@ func (r *RequestEthereumBody) GenerateRequest() (*http.Request, error) {
 		return nil, err
 	}
 
-	return http.NewRequest("POST", r.Address, bytes.NewBuffer(buf.Bytes()))
+	return http.NewRequest("POST", r.Address, buf)
 }
