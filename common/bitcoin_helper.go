@@ -11,7 +11,7 @@ type RequestBitcoinBody struct {
 	Params  interface{} `json:"params"`
 	Address string      `json:"-"`
 	JSONRPC string      `json:"jsonrpc"`
-	Method  string      `josn:"method"`
+	Method  string      `json:"method"`
 	ID      uint8       `json:"id"`
 }
 
