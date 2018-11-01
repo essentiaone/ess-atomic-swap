@@ -4,6 +4,12 @@ import (
 	"bytes"
 	"encoding/json"
 	"net/http"
+
+	"github.com/pkg/errors"
+)
+
+const (
+	nodeError = "invalid request to node"
 )
 
 // RequestRPC structure for body request to RPC server
@@ -15,10 +21,15 @@ type RequestRPC struct {
 	ID      uint8       `json:"id"`
 }
 
+// ResponseErrorRPC structure for error response RPC server
+type ResponseErrorRPC struct {
+	Message string `json:"message"`
+}
+
 // ResponseRPC structure for response RPC server
 type ResponseRPC struct {
-	Result interface{} `json:"result,omitempty"`
-	Error  interface{} `json:"error,omitempty"`
+	Result interface{}       `json:"result,omitempty"`
+	Error  *ResponseErrorRPC `json:"error,omitempty"`
 }
 
 // New create new RPC client
@@ -40,12 +51,12 @@ func (r *RequestRPC) ExecuteRequest(method string, target interface{}, params ..
 	buf := bytes.NewBuffer(rawData)
 	err := json.NewEncoder(buf).Encode(r)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "cannot encode RPC body")
 	}
 
 	request, err := http.NewRequest("POST", r.Address, buf)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "cannot create RPC request")
 	}
 
 	request.Header.Add("Content-type", "application/json")
@@ -53,7 +64,7 @@ func (r *RequestRPC) ExecuteRequest(method string, target interface{}, params ..
 	client := http.Client{}
 	rawResponse, err := client.Do(request)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "cannot send request to RPC server")
 	}
 
 	responseRPC := &ResponseRPC{Result: target}
@@ -64,7 +75,14 @@ func (r *RequestRPC) ExecuteRequest(method string, target interface{}, params ..
 		}
 	}()
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "cannot decode response from RPC server")
 	}
+
+	if responseRPC.Result == nil && responseRPC.Error == nil {
+		return nodeError, errors.New(nodeError)
+	} else if responseRPC.Error != nil {
+		return nodeError, errors.New(responseRPC.Error.Message)
+	}
+
 	return responseRPC.Result, nil
 }
