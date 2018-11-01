@@ -4,7 +4,7 @@ import (
 	"net/http"
 )
 
-//Settings struct is a simple settings for the server
+// Settings struct is a simple settings for the server
 type Settings struct {
 	SSL  bool
 	Port string `env:"PORT"`
@@ -18,7 +18,7 @@ func initRouting() {
 	})
 }
 
-//Init is a func for initiate a Settings struct
+// Init is a func for initiate a Settings struct
 func Init(settings Settings) error {
 	addr := ":" + settings.Port
 	initRouting()

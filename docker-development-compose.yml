@@ -6,6 +6,8 @@ services:
       - PORT=${PORT}
       - DEV_PORT=${DEV_PORT}
       - DEVELOPMENT=true
+      - BTC_ADDR=${BTC_ADDR}
+      - ETH_ADDR=${ETH_ADDR}
     build:
       context: .
       dockerfile: Dockerfile-development
