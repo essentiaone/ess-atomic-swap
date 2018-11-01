@@ -7,6 +7,8 @@ Service to cross-chain transactions between two or more people
 	```
 	$ export PORT=1604
 	$ export DEV_PORT=1605
+	$ export BTC_ADDR=https://address_to_btc_node
+	$ export ETH_ADDR=https://address_to_eth_node
 	...
 	```
 
