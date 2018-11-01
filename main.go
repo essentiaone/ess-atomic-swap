@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 
+	"github.com/essentiaone/ess-atomic-swap/rpc"
+
 	btc "github.com/essentiaone/ess-atomic-swap/btc/usecase"
 	"github.com/essentiaone/ess-atomic-swap/config"
 	eth "github.com/essentiaone/ess-atomic-swap/eth/usecase"
@@ -19,12 +21,15 @@ const (
 func main() {
 	settings, _ := config.Init()
 
-	test := eth.New(nil, ethNodeURL)
+	ethereumNode := rpc.New(ethNodeURL)
+	bitcoinNode := rpc.New(btcNodeURL)
+
+	test := eth.New(nil, ethereumNode)
 	result := test.CheckTxStatus(ethTxHash)
 	fmt.Println(result)
 
-	testBitcoin := btc.New(nil, btcNodeURL)
-	resultBitcoin := testBitcoin.СheckTxStatus(btcTxHash)
+	testBitcoin := btc.New(nil, bitcoinNode)
+	resultBitcoin := testBitcoin.CheckTxStatus(btcTxHash)
 	fmt.Println(resultBitcoin)
 
 	if err := server.Init(settings.Server); err != nil {
