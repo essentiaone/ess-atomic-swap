@@ -44,19 +44,34 @@ func (c *InvalidRequest) ExecuteRequest(
 	return nil, errors.New("invalid response from bitcoin node")
 }
 
+type ErrorResponse struct{}
+
+func (c *ErrorResponse) ExecuteRequest(method string, target interface{}, params ...interface{}) (interface{}, error) {
+	return "some data", errors.New("invalid response from bitcoin node")
+}
+
 func TestCheckTxStatus(t *testing.T) {
 	fmt.Println("Transaction confirmed success")
 	bitcoin := usecase.New(nil, &ConfirmedTransaction{})
-	isSuccess := bitcoin.CheckTxStatus("Success")
+	isSuccess, err := bitcoin.CheckTxStatus("Success")
+	assert.NoError(t, err)
 	assert.True(t, isSuccess)
 
 	fmt.Println("Transaction not confirmed")
 	bitcoin = usecase.New(nil, &NotConfirmedTransaction{})
-	isSuccess = bitcoin.CheckTxStatus("Failed")
+	isSuccess, err = bitcoin.CheckTxStatus("Failed")
+	assert.NoError(t, err)
 	assert.False(t, isSuccess)
 
 	fmt.Println("Invalid response from ethereum node")
 	bitcoin = usecase.New(nil, &InvalidRequest{})
-	isSuccess = bitcoin.CheckTxStatus("Invalid")
+	isSuccess, err = bitcoin.CheckTxStatus("Invalid")
+	assert.Error(t, err)
+	assert.False(t, isSuccess)
+
+	fmt.Println("Error response from bictoin node")
+	bitcoin = usecase.New(nil, &ErrorResponse{})
+	isSuccess, err = bitcoin.CheckTxStatus("Error")
+	assert.Error(t, err)
 	assert.False(t, isSuccess)
 }
