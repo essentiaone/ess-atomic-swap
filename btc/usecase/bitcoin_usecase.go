@@ -3,6 +3,7 @@ package usecase
 import (
 	"github.com/essentiaone/ess-atomic-swap/btc"
 	"github.com/essentiaone/ess-atomic-swap/models"
+	"github.com/pkg/errors"
 )
 
 const (
@@ -25,14 +26,17 @@ func New(btcRep btc.BitcoinRepository, btcNode btc.BitcoinNode) btc.BitcoinUseCa
 }
 
 // CheckTxStatus func for implementing BitcoinUseCase interface
-func (btc *BitcoinUsecase) CheckTxStatus(tx string) bool {
+func (btc *BitcoinUsecase) CheckTxStatus(tx string) (bool, error) {
 	bitcoinTransaction := &models.BitcoinTransaction{}
 	response, err := btc.node.ExecuteRequest(getTxReceiptMethodName, bitcoinTransaction, tx)
-	if err != nil {
-		return false
+
+	if response != nil && err != nil { // Error from ethereum node
+		return false, err
+	} else if err != nil {
+		return false, errors.Wrap(err, models.ErrorServerInternal.Error())
 	}
 
 	transactionInfo := response.(*models.BitcoinTransaction)
 
-	return transactionInfo.Confirmations >= txSuccess
+	return transactionInfo.Confirmations >= txSuccess, nil
 }

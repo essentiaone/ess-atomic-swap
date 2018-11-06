@@ -35,13 +35,19 @@ var (
 		fmt.Fprint(w, `{"result":{"status":"0x1"}}`)
 	}))
 
-	invalidServer = httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(-1) // send invalid http status
-	}))
-
 	invalidResponseFromServer = httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Add("Content-Type", "application/json")
 		fmt.Fprintf(w, `{"result":{"status":"invalid_JOSN}}`) // after 'invalid_JSON' absent "
+	}))
+
+	emptyResponse = httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Add("Content-Type", "application/json")
+		fmt.Fprintf(w, `{"result":null}`)
+	}))
+
+	errorResponse = httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Add("Content-Type", "application/json")
+		fmt.Fprintf(w, `{"error":{"message":"cannot find tx transaction"}}`)
 	}))
 )
 
@@ -67,7 +73,7 @@ func TestExecuteRequest(t *testing.T) {
 	assert.Error(t, err)
 
 	fmt.Println("Request to invalid server")
-	rpcClient = rpc.New(invalidServer.URL)
+	rpcClient = rpc.New("https://invalid_address")
 	_, err = rpcClient.ExecuteRequest("test_method", nil, nil)
 	assert.Error(t, err)
 
@@ -76,4 +82,17 @@ func TestExecuteRequest(t *testing.T) {
 	targetMap = map[string]interface{}{}
 	_, err = rpcClient.ExecuteRequest("test_method", targetMap, nil)
 	assert.Error(t, err)
+
+	fmt.Println("Empty response from server")
+	rpcClient = rpc.New(emptyResponse.URL)
+	targetMap = map[string]interface{}{}
+	_, err = rpcClient.ExecuteRequest("test_method", targetMap, nil)
+	assert.Error(t, err)
+
+	fmt.Println("Error response from server")
+	rpcClient = rpc.New(errorResponse.URL)
+	targetMap = map[string]interface{}{}
+	_, err = rpcClient.ExecuteRequest("test_method", targetMap, nil)
+	assert.Error(t, err)
+	assert.Equal(t, "cannot find tx transaction", err.Error())
 }

@@ -22,12 +22,18 @@ func main() {
 	ethereumNode := rpc.New(config.EthereumNodeAddr)
 	bitcoinNode := rpc.New(config.BitcoinNodeAddr)
 
-	test := eth.New(nil, ethereumNode)
-	result := test.CheckTxStatus(ethTxHash)
-	fmt.Println(result)
+	testEthereum := eth.New(nil, ethereumNode)
+	resultEthereum, err := testEthereum.CheckTxStatus(ethTxHash)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(resultEthereum)
 
 	testBitcoin := btc.New(nil, bitcoinNode)
-	resultBitcoin := testBitcoin.CheckTxStatus(btcTxHash)
+	resultBitcoin, err := testBitcoin.CheckTxStatus(btcTxHash)
+	if err != nil {
+		fmt.Println(err)
+	}
 	fmt.Println(resultBitcoin)
 
 	if err := server.Init(config.Server); err != nil {
