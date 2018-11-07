@@ -7,7 +7,7 @@ import (
 // Settings struct is a simple settings for the server
 type Settings struct {
 	SSL  bool
-	Port string `env:"PORT"`
+	Port string `env:"PORT,required"`
 }
 
 func initRouting() {
