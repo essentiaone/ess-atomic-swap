@@ -9,6 +9,8 @@ Service to cross-chain transactions between two or more people
 	$ export DEV_PORT=1605
 	$ export BTC_ADDR=https://address_to_btc_node
 	$ export ETH_ADDR=https://address_to_eth_node
+	$ export SCDB_ADDR=https://address_to_scdb (smart contract)
+	$ export PRIVATE_KEY=your_private_key_for_ETH_ADDR_node
 	...
 	```
 
