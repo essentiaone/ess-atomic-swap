@@ -11,6 +11,7 @@ run_development: build_development start_development
 build_development:
 	$(GOGET) github.com/codegangsta/gin
 	$(GOGET) -u github.com/golangci/golangci-lint/cmd/golangci-lint
+	$(GOGET) github.com/ethereum/go-ethereum
 
 start_development:
 	gin --appPort=${PORT} --port=${DEV_PORT} run main.go
@@ -19,6 +20,7 @@ start_development:
 run_production:	build_production start_production
 
 build_production:
+	$(GOGET) github.com/ethereum/go-ethereum
 	$(GOBUILD) .
 
 start_production:

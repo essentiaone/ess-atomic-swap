@@ -8,6 +8,8 @@ services:
       - DEVELOPMENT=true
       - BTC_ADDR=${BTC_ADDR}
       - ETH_ADDR=${ETH_ADDR}
+      - SCDB_ADDR=${SCDB_ADDR}
+      - PRIVATE_KEY="${PRIVATE_KEY}"
     build:
       context: .
       dockerfile: Dockerfile-development

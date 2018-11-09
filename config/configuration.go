@@ -18,7 +18,7 @@ type Configuration struct {
 // Init that read env va-les
 func Init() (*Configuration, error) {
 	conf := &Configuration{}
-	if err := envdecode.Decode(&conf); err != nil {
+	if err := envdecode.Decode(conf); err != nil {
 		return nil, errors.Wrap(err, "cannot read env variables")
 	}
 	return conf, nil

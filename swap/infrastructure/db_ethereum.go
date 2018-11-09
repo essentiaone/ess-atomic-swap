@@ -9,6 +9,7 @@ import (
 	"github.com/essentiaone/ess-atomic-swap/sc"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/pkg/errors"
@@ -23,7 +24,7 @@ type HandlerSCDB struct {
 	Store      *sc.Store      // sc structure
 }
 
-//New create new handler for smart contract
+// New create new handler for smart contract
 func New(nodeAddr, SCDBaddr, userPrivateKey string) (*HandlerSCDB, error) {
 	client, err := ethclient.Dial(nodeAddr)
 	if err != nil {
@@ -105,17 +106,16 @@ func (scdb *HandlerSCDB) InitiateGetByAddress(address string) (map[string]interf
 	}
 
 	return map[string]interface{}{
-		"from":           common.ToHex(fromAddressHex[:]),
-		"to":             common.ToHex(toAddressHex[:]),
+		"from":           hexutil.Encode(fromAddressHex[:]),
+		"to":             hexutil.Encode(toAddressHex[:]),
 		"amount":         amount,
 		"blockTimestamp": block,
-		"hash":           common.ToHex(hashHex[:]),
+		"hash":           hexutil.Encode(hashHex[:]),
 	}, nil
 }
 
 // InitiateConfirm move user to constant table
 func (scdb *HandlerSCDB) InitiateConfirm(address, password, txHash string, blockTimestamp big.Int) (string, error) {
-
 	var rawTxHash [32]byte
 	copy(rawTxHash[:], txHash)
 
