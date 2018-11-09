@@ -19,3 +19,7 @@ gin-bin
 
 # config
 config.json
+
+# tools for smart contract
+sc/*.abi
+sc/*.bin
