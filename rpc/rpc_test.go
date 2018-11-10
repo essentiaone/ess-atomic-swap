@@ -90,7 +90,7 @@ func TestExecuteRequest(t *testing.T) {
 	_, err = rpcClient.ExecuteRequest("test_method", targetMap, nil)
 	assert.Error(t, err)
 
-	fmt.Println("Error response from server")
+	fmt.Println("Response with error from server")
 	rpcClient = rpc.New(errorResponse.URL)
 	targetMap = map[string]interface{}{}
 	_, err = rpcClient.ExecuteRequest("test_method", targetMap, nil)

@@ -4,12 +4,14 @@ import (
 	"bytes"
 	"encoding/json"
 	"net/http"
+	"time"
 
 	"github.com/pkg/errors"
 )
 
 const (
-	nodeError = "invalid request to node"
+	nodeError           = "invalid request to node"
+	timeWaitResponseRPC = 10 // TODO: in future move to config
 )
 
 // RequestRPC structure for body request to RPC server
@@ -61,7 +63,7 @@ func (r *RequestRPC) ExecuteRequest(method string, target interface{}, params ..
 
 	request.Header.Add("Content-type", "application/json")
 
-	client := http.Client{}
+	client := http.Client{Timeout: time.Second * timeWaitResponseRPC}
 	rawResponse, err := client.Do(request)
 	if err != nil {
 		return nil, errors.Wrap(err, "cannot send request to RPC server")
@@ -77,6 +79,13 @@ func (r *RequestRPC) ExecuteRequest(method string, target interface{}, params ..
 	if err != nil {
 		return nil, errors.Wrap(err, "cannot decode response from RPC server")
 	}
+
+	/**
+	If 'Result' and 'Error' is empty,
+	you could not make a request to RPC server.
+	If 'Error' not empty,
+	RPC server accepted invalid request data
+	*/
 
 	if responseRPC.Result == nil && responseRPC.Error == nil {
 		return nodeError, errors.New(nodeError)

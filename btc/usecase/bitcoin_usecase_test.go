@@ -41,37 +41,41 @@ func (c *InvalidRequest) ExecuteRequest(
 	target interface{},
 	params ...interface{},
 ) (interface{}, error) {
-	return nil, errors.New("invalid response from bitcoin node")
+	return nil, errors.New("invalid response from Bitcoin node")
 }
 
 type ErrorResponse struct{}
 
-func (c *ErrorResponse) ExecuteRequest(method string, target interface{}, params ...interface{}) (interface{}, error) {
-	return "some data", errors.New("invalid response from bitcoin node")
+func (c *ErrorResponse) ExecuteRequest(
+	method string,
+	target interface{},
+	params ...interface{},
+) (interface{}, error) {
+	return "some data", errors.New("error response from Bitcoin node")
 }
 
-func TestCheckTxStatus(t *testing.T) {
+func TestTxStatus(t *testing.T) {
 	fmt.Println("Transaction confirmed success")
-	bitcoin := usecase.New(nil, &ConfirmedTransaction{})
-	isSuccess, err := bitcoin.CheckTxStatus("Success")
+	bitcoin := usecase.New(&ConfirmedTransaction{})
+	isSuccess, err := bitcoin.TxStatus("Success")
 	assert.NoError(t, err)
 	assert.True(t, isSuccess)
 
 	fmt.Println("Transaction not confirmed")
-	bitcoin = usecase.New(nil, &NotConfirmedTransaction{})
-	isSuccess, err = bitcoin.CheckTxStatus("Failed")
+	bitcoin = usecase.New(&NotConfirmedTransaction{})
+	isSuccess, err = bitcoin.TxStatus("Failed")
 	assert.NoError(t, err)
 	assert.False(t, isSuccess)
 
-	fmt.Println("Invalid response from ethereum node")
-	bitcoin = usecase.New(nil, &InvalidRequest{})
-	isSuccess, err = bitcoin.CheckTxStatus("Invalid")
+	fmt.Println("Invalid response from Bitcoin node")
+	bitcoin = usecase.New(&InvalidRequest{})
+	isSuccess, err = bitcoin.TxStatus("Invalid")
 	assert.Error(t, err)
 	assert.False(t, isSuccess)
 
-	fmt.Println("Error response from bictoin node")
-	bitcoin = usecase.New(nil, &ErrorResponse{})
-	isSuccess, err = bitcoin.CheckTxStatus("Error")
+	fmt.Println("Error response from Bitcoin node")
+	bitcoin = usecase.New(&ErrorResponse{})
+	isSuccess, err = bitcoin.TxStatus("Error")
 	assert.Error(t, err)
 	assert.False(t, isSuccess)
 }

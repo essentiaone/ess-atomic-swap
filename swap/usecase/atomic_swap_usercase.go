@@ -5,7 +5,7 @@ import (
 	"github.com/essentiaone/ess-atomic-swap/swap"
 )
 
-// AtomicSwapUsecase consist all DI for AtomicSwapUsecase
+// AtomicSwapUsecase consist all dependency for work
 type AtomicSwapUsecase struct {
 	repository swap.AtomicSwapRepository
 }

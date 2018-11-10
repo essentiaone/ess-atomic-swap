@@ -41,7 +41,7 @@ func (c *InvalidRequest) ExecuteRequest(
 	target interface{},
 	params ...interface{},
 ) (interface{}, error) {
-	return nil, errors.New("invalid response from ethereum node")
+	return nil, errors.New("invalid response from Ethereum node")
 }
 
 type ErrorResponse struct{}
@@ -51,31 +51,31 @@ func (c *ErrorResponse) ExecuteRequest(
 	target interface{},
 	params ...interface{},
 ) (interface{}, error) {
-	return "some data", errors.New("invalid response from ethereum node")
+	return "some data", errors.New("error response from Ethereum node")
 }
 
-func TestCheckTxStatus(t *testing.T) {
+func TestTxStatus(t *testing.T) {
 	fmt.Println("Transaction confirmed success")
-	ethereum := usecase.New(nil, &ConfirmedTransaction{})
-	isSuccess, err := ethereum.CheckTxStatus("Success")
+	ethereum := usecase.New(&ConfirmedTransaction{})
+	isSuccess, err := ethereum.TxStatus("Success")
 	assert.NoError(t, err)
 	assert.True(t, isSuccess)
 
 	fmt.Println("Transaction not confirmed")
-	ethereum = usecase.New(nil, &NotConfirmedTransaction{})
-	isSuccess, err = ethereum.CheckTxStatus("Failed")
+	ethereum = usecase.New(&NotConfirmedTransaction{})
+	isSuccess, err = ethereum.TxStatus("Failed")
 	assert.NoError(t, err)
 	assert.False(t, isSuccess)
 
-	fmt.Println("Invalid response from ethereum node")
-	ethereum = usecase.New(nil, &InvalidRequest{})
-	isSuccess, err = ethereum.CheckTxStatus("Invalid")
+	fmt.Println("Invalid response from Ethereum node")
+	ethereum = usecase.New(&InvalidRequest{})
+	isSuccess, err = ethereum.TxStatus("Invalid")
 	assert.Error(t, err)
 	assert.False(t, isSuccess)
 
-	fmt.Println("Error response from ethereum node")
-	ethereum = usecase.New(nil, &ErrorResponse{})
-	isSuccess, err = ethereum.CheckTxStatus("Error")
+	fmt.Println("Error response from Ethereum node")
+	ethereum = usecase.New(&ErrorResponse{})
+	isSuccess, err = ethereum.TxStatus("Error")
 	assert.Error(t, err)
 	assert.False(t, isSuccess)
 }

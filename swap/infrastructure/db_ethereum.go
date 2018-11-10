@@ -28,7 +28,7 @@ type HandlerSCDB struct {
 func New(nodeAddr, SCDBaddr, userPrivateKey string) (*HandlerSCDB, error) {
 	client, err := ethclient.Dial(nodeAddr)
 	if err != nil {
-		return nil, errors.Wrap(err, "cannot connect to ethereum node")
+		return nil, errors.Wrap(err, "cannot connect to Ethereum node")
 	}
 
 	store, err := sc.NewStore(common.HexToAddress(SCDBaddr), client)
