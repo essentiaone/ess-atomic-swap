@@ -11,23 +11,21 @@ const (
 	txSuccess              = "0x1"
 )
 
-// EthereumUseCase consist all dependency for business logic
+// EthereumUseCase consist all dependency for work
 type EthereumUseCase struct {
-	repository eth.EthereumRepository
-	node       eth.EthereumNode
+	node eth.EthereumNode
 }
 
 // New create EthereumUseCase
-func New(ethRep eth.EthereumRepository, ethNode eth.EthereumNode) eth.EthereumUseCase {
+func New(ethNode eth.EthereumNode) eth.EthereumUseCase {
 	return &EthereumUseCase{
-		repository: ethRep,
-		node:       ethNode,
+		node: ethNode,
 	}
 }
 
-// CheckTxStatus check success status for ethereum transaction
+// TxStatus check success status for Ethereum transaction
 // TODO implement sturct for response with status error and description
-func (eth *EthereumUseCase) CheckTxStatus(tx string) (bool, error) {
+func (eth *EthereumUseCase) TxStatus(tx string) (bool, error) {
 	ethereumTransaction := &models.EthereumTransaction{}
 	response, err := eth.node.ExecuteRequest(getTxReceiptMethodName, ethereumTransaction, tx)
 

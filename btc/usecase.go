@@ -1,6 +1,6 @@
 package btc
 
-// BitcoinUseCase is an interface for using BR of BTC atomic swap
+// BitcoinUseCase interface for work with Bitcoin blockchain
 type BitcoinUseCase interface {
-	CheckTxStatus(string) (bool, error)
+	TxStatus(string) (bool, error)
 }
