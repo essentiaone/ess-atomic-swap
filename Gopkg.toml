@@ -25,6 +25,16 @@
 #   unused-packages = true
 
 
+ignored = [
+	"github.com/ethereum/go-ethereum/accounts/abi",
+	"github.com/ethereum/go-ethereum/accounts/abi/bind",
+	"github.com/ethereum/go-ethereum/common",
+	"github.com/ethereum/go-ethereum/common/hexutil",
+	"github.com/ethereum/go-ethereum/core/types",
+	"github.com/ethereum/go-ethereum/crypto",
+	"github.com/ethereum/go-ethereum/ethclient",
+]
+
 [prune]
   go-tests = true
   unused-packages = true
@@ -57,3 +67,7 @@
 [[constraint]]
   name = "github.com/pkg/errors"
   version = "0.8.0"
+
+[[constraint]]
+  name = "github.com/sirupsen/logrus"
+  version = "1.2.0"

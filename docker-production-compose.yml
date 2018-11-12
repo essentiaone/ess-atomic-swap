@@ -5,7 +5,7 @@ services:
     environment:
       - PORT=${PORT}
       - DEV_PORT=${DEV_PORT}
-      - DEVELOPMENT=false
+      - PRODUCTION=true
       - BTC_ADDR=${BTC_ADDR}
       - ETH_ADDR=${ETH_ADDR}
       - SCDB_ADDR=${SCDB_ADDR}

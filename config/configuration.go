@@ -13,6 +13,7 @@ type Configuration struct {
 	Server           server.Settings
 	SCDBAddr         string `env:"SCDB_ADDR,required"`
 	PrivateKet       string `env:"PRIVATE_KEY,required"`
+	IsProduction     bool   `env:"PRODUCTION,default=false"`
 }
 
 // Init that read env va-les
