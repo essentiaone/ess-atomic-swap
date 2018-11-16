@@ -1,3 +1,4 @@
+![essentia scheme](https://user-images.githubusercontent.com/37807029/48618367-da85ac00-e9a1-11e8-83f0-ae24e7be51cb.png)
 # Ess-atomic-swap
 Service to cross-chain transactions between two or more people
 
