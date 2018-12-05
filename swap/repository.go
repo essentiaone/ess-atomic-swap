@@ -1,7 +1,8 @@
 package swap
 
+import "github.com/essentiaone/ess-atomic-swap/models"
+
 // AtomicSwapRepository is an interface for storing info
 type AtomicSwapRepository interface {
-	SaveOrderTemporary() ([]byte, error)
-	MoveOrderInvariable() ([]byte, error)
+	SaveOrderTemporary(*models.AtomicSwapInitiate) (string, error)
 }

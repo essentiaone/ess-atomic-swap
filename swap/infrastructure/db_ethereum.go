@@ -79,8 +79,8 @@ func (scdb *HandlerSCDB) GenerateTransaction() (*bind.TransactOpts, error) {
 	return tx, nil
 }
 
-// InitiateSave save user to temporary table
-func (scdb *HandlerSCDB) InitiateSave(fromAddress, toAddress, password string, amount int64) (string, error) {
+// SaveOrder save user to temporary table
+func (scdb *HandlerSCDB) SaveOrder(fromAddress, toAddress, password string, amount int64) (string, error) {
 	rawTx, err := scdb.GenerateTransaction()
 	if err != nil {
 		return "", err
