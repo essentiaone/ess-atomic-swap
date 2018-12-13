@@ -16,7 +16,7 @@ type controllers struct {
 
 func (c *controllers) intex(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
 	if _, err := w.Write([]byte("Hello, essentia!")); err != nil {
-		log.Fatal("cannot write to index")
+		log.Fatal("cannot write to index page")
 	}
 }
 
