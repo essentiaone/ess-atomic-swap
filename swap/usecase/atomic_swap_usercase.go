@@ -18,6 +18,11 @@ func New(swapRep swap.AtomicSwapRepository) swap.AtomicSwapUseCase {
 }
 
 // Initiate accept order and save it temporary table
-func (swap *AtomicSwapUsecase) Initiate(order *models.AtomicSwapInitiate) (string, error) {
-	return swap.repository.SaveOrderTemporary(order)
+func (swap *AtomicSwapUsecase) Initiate(*models.AtomicSwapInitiate) (string, error) {
+	rawHash, err := swap.repository.SaveOrderTemporary()
+	if err != nil {
+		return "", err
+	}
+
+	return string(rawHash), nil
 }

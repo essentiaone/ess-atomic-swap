@@ -1,12 +1,14 @@
 package repository
 
 import (
-	"github.com/essentiaone/ess-atomic-swap/models"
 	"github.com/essentiaone/ess-atomic-swap/swap"
 )
 
 type SCDBInfrastructure interface {
-	SaveOrder(string, string, string, int64) (string, error)
+	Save()
+	Get()
+	Delete()
+	Update()
 }
 
 type scdbSwapRepository struct {
@@ -19,6 +21,10 @@ func New(scdb SCDBInfrastructure) swap.AtomicSwapRepository {
 	}
 }
 
-func (db *scdbSwapRepository) SaveOrderTemporary(order *models.AtomicSwapInitiate) (string, error) {
-	return db.scdb.SaveOrder(order.From, order.To, order.Password, int64(order.Amount))
+func (scdb *scdbSwapRepository) SaveOrderTemporary() ([]byte, error) {
+	return []byte{}, nil
+}
+
+func (scdb *scdbSwapRepository) MoveOrderInvariable() ([]byte, error) {
+	return []byte{}, nil
 }
