@@ -2,6 +2,7 @@ package server
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 
 	"github.com/essentiaone/ess-atomic-swap/models"
@@ -13,21 +14,20 @@ type controllers struct {
 	swap swap.AtomicSwapUseCase
 }
 
-func (c *controllers) intex(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	w.Write([]byte("Hello, essentia!"))
+func (c *controllers) intex(w http.ResponseWriter, _ *http.Request, _ httprouter.Params) {
+	if _, err := w.Write([]byte("Hello, essentia!")); err != nil {
+		log.Fatal("cannot write to index")
+	}
 }
 
 func (c *controllers) initiate(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	initiateInfo := &models.AtomicSwapInitiate{}
 	err := json.NewDecoder(r.Body).Decode(&initiateInfo)
-	defer func() {
-		if r.Body != nil {
-			r.Body.Close()
-		}
-	}()
 	if err != nil {
 		generateResponse(w, "cannot create body response", false)
 	}
+	defer r.Body.Close()
+
 	txHash, err := c.swap.Initiate(initiateInfo)
 	if err != nil {
 		generateResponse(w, err, false)
@@ -45,11 +45,7 @@ func generateResponse(w http.ResponseWriter, message interface{}, isSuccess bool
 	res := map[string]interface{}{
 		key: message,
 	}
-	rawRes, err := json.Marshal(res)
-	if err != nil {
-		w.Write([]byte(`{"error":"cannot create response body"}`))
-		return
+	if err := json.NewEncoder(w).Encode(res); err != nil {
+		log.Fatal("cannot write initial response")
 	}
-	w.Write(rawRes)
-	return
 }
